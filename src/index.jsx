@@ -1,5 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+
+
+
+function Counter({ count, onClick }) {
+  return (
+    <button type="button" onClick={onClick}>
+      Click me!
+      ({ count })
+    </button>
+  )
+}
 
 function Button({ children }) {
   return(
@@ -21,14 +32,42 @@ function Buttons() {
   )
 }
 
-function App() {
+function Page({ count, onClick }) {
   return (
     <div>
       <p>Hello, world!</p>
       <p>Hi!</p>
+      <Counter
+        count={count}
+        onClick={onClick}
+      />
       <Buttons />
     </div>
   );
+}
+
+function App() {
+  const [state, setState] = useState({
+    count: 0,
+  });
+
+  const { count } = state;
+
+  function handleClick() {
+    setState({
+      count: count + 1,
+    });
+  }
+
+  return (
+    <Page
+      count={count}
+      onClick={handleClick}
+    />
+  )
 }  
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <App />, 
+  document.getElementById('app'),
+);
